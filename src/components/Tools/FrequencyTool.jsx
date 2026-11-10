@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UZBEK_FREQ, ENGLISH_FREQ } from '../../data/frequencyData';
 import { caesarDecrypt } from '../../utils/classicalCiphers';
-import { BarChart3, Search, Sparkles, RotateCcw } from 'lucide-react';
+import { BarChart3, Sparkles } from 'lucide-react';
 
 export default function FrequencyTool() {
   const [text, setText] = useState('KHOOR ZRUOG WKLV LV D VHFUHW PHVVDJH');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { railFenceEncrypt, railFenceDecrypt } from '../../utils/classicalCiphers';
-import { Copy, Check, GitCommit, Sparkles } from 'lucide-react';
+import { Copy, Check, GitCommit } from 'lucide-react';
 
 export default function RailFence() {
   const [inputText, setInputText] = useState('KRIPTOGRAFIYA');

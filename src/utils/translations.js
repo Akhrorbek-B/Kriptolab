@@ -2,6 +2,7 @@ export const translations = {
   uz: {
     // Navbar
     'nav.home': 'Bosh sahifa',
+    'nav.course': "O'quv kursi",
     'nav.classical': 'Klassik Shifrlar',
     'nav.modern': 'Zamonaviy AES',
     'nav.asymmetric': 'Asimmetrik (RSA)',
@@ -50,6 +51,7 @@ export const translations = {
     'hero.title3': "O'rganing",
     'hero.desc': "Sezar va Enigmadan to zamonaviy AES, RSA, Diffie-Hellman hamda SHA-256 xeshgacha — har bir algoritmning matematik modelini jonli simulyatorlar va qadamma-qadam vizualizatsiyalar yordamida kashf eting.",
     'hero.startLab': 'Laboratoriyani boshlash',
+    'hero.startCourse': "Kursni 0 dan boshlash",
     'hero.textbook': "Darslik & Metodik Qo'llanma",
     'hero.stat.simulators': 'Interaktiv Simulyator',
     'hero.stat.math': 'Matematik Qadamlar',
@@ -212,6 +214,7 @@ export const translations = {
   en: {
     // Navbar
     'nav.home': 'Home',
+    'nav.course': 'Course',
     'nav.classical': 'Classical Ciphers',
     'nav.modern': 'Modern AES',
     'nav.asymmetric': 'Asymmetric (RSA)',
@@ -260,6 +263,7 @@ export const translations = {
     'hero.title3': '',
     'hero.desc': 'From Caesar and Enigma to modern AES, RSA, Diffie-Hellman and SHA-256 — discover mathematical models of every algorithm through live simulators and step-by-step visualizations.',
     'hero.startLab': 'Start Laboratory',
+    'hero.startCourse': 'Start the course from zero',
     'hero.textbook': 'Textbook & Guide',
     'hero.stat.simulators': 'Interactive Simulators',
     'hero.stat.math': 'Mathematical Steps',
@@ -422,6 +426,7 @@ export const translations = {
   ru: {
     // Navbar
     'nav.home': 'Главная',
+    'nav.course': 'Курс',
     'nav.classical': 'Классические Шифры',
     'nav.modern': 'Современный AES',
     'nav.asymmetric': 'Асимметричные (RSA)',
@@ -470,6 +475,7 @@ export const translations = {
     'hero.title3': '',
     'hero.desc': 'От Цезаря и Энигмы до современных AES, RSA, Диффи-Хеллмана и SHA-256 — откройте для себя математические модели каждого алгоритма через живые симуляторы и пошаговые визуализации.',
     'hero.startLab': 'Начать Лабораторию',
+    'hero.startCourse': 'Начать курс с нуля',
     'hero.textbook': 'Учебник и Руководство',
     'hero.stat.simulators': 'Интерактивных Симуляторов',
     'hero.stat.math': 'Математических Шагов',

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { simulateEnigmaChar } from '../../utils/classicalCiphers';
-import { Cpu, ArrowRight, RotateCcw, Lightbulb, Sparkles, Volume2 } from 'lucide-react';
+import { Cpu, RotateCcw, Lightbulb, Sparkles } from 'lucide-react';
 
 export default function EnigmaMini() {
   const [rotor1, setRotor1] = useState(0); // 0..25

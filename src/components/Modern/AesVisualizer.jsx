@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { simulateAesRound, toHex } from '../../utils/modernCiphers';
-import { Binary, ArrowRight, ArrowLeft, RotateCcw, Cpu, Layers, CheckCircle } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function AesVisualizer() {
   const [inputText, setInputText] = useState('KRIPTOGRAFIYA123'); // 16 bayt

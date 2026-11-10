@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ShieldCheck, ShieldAlert, Layers, RefreshCw, Eye } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, Eye } from 'lucide-react';
 
 export default function CipherModes() {
   const [selectedPattern, setSelectedPattern] = useState('tux'); // 'tux' | 'shield' | 'stripes'
@@ -227,7 +227,7 @@ export default function CipherModes() {
               </tr>
               <tr>
                 <td className="p-2.5 font-bold text-cyan-400">CBC</td>
-                <td className="p-2.5 font-mono">C_i = E_K(P_i ⊕ C_{i-1})</td>
+                <td className="p-2.5 font-mono">{'C_i = E_K(P_i ⊕ C_{i-1})'}</td>
                 <td className="p-2.5 text-emerald-400">Ha (Majburiy)</td>
                 <td className="p-2.5 text-slate-500">Faqat deshifrlashda</td>
                 <td className="p-2.5 text-emerald-400">Yuqori (Keng qo'llaniladi)</td>

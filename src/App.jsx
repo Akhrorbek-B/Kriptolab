@@ -1,30 +1,44 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import CourseRoadmap from './components/Course/CourseRoadmap';
+import ErrorBoundary from './components/ErrorBoundary';
 import { useLanguage } from './context/LanguageContext';
-import CaesarCipher from './components/Classical/CaesarCipher';
-import VigenereCipher from './components/Classical/VigenereCipher';
-import AffineCipher from './components/Classical/AffineCipher';
-import PlayfairCipher from './components/Classical/PlayfairCipher';
-import RailFence from './components/Classical/RailFence';
-import EnigmaMini from './components/Classical/EnigmaMini';
-import AesVisualizer from './components/Modern/AesVisualizer';
-import CipherModes from './components/Modern/CipherModes';
-import RsaVisualizer from './components/Asymmetric/RsaVisualizer';
-import DiffieHellman from './components/Asymmetric/DiffieHellman';
-import EccConcept from './components/Asymmetric/EccConcept';
-import AvalancheVisualizer from './components/Hashing/AvalancheVisualizer';
-import DigitalSignature from './components/Hashing/DigitalSignature';
-import FrequencyTool from './components/Tools/FrequencyTool';
-import ConverterTool from './components/Tools/ConverterTool';
-import QuizArena from './components/Quiz/QuizArena';
-import CtfArena from './components/CTF/CtfArena';
-import TheoryModal from './components/Theory/TheoryModal';
-import { 
-  Lock, Binary, KeyRound, Fingerprint, SlidersHorizontal, 
-  Trophy, ShieldCheck, Github, Heart, ExternalLink,
-  Zap, Shield, BookOpen, Flag
+import useHashRoute from './hooks/useHashRoute';
+import {
+  Lock, Binary, KeyRound, Fingerprint, SlidersHorizontal,
+  ShieldCheck, Heart, Zap, Shield,
 } from 'lucide-react';
+
+// Bo'limlar faqat kerak bo'lganda yuklanadi (code-splitting) — birinchi ochilish tezlashadi.
+const CoursePage = lazy(() => import('./components/Course/CoursePage'));
+const CaesarCipher = lazy(() => import('./components/Classical/CaesarCipher'));
+const VigenereCipher = lazy(() => import('./components/Classical/VigenereCipher'));
+const AffineCipher = lazy(() => import('./components/Classical/AffineCipher'));
+const PlayfairCipher = lazy(() => import('./components/Classical/PlayfairCipher'));
+const RailFence = lazy(() => import('./components/Classical/RailFence'));
+const EnigmaMini = lazy(() => import('./components/Classical/EnigmaMini'));
+const AesVisualizer = lazy(() => import('./components/Modern/AesVisualizer'));
+const CipherModes = lazy(() => import('./components/Modern/CipherModes'));
+const RsaVisualizer = lazy(() => import('./components/Asymmetric/RsaVisualizer'));
+const DiffieHellman = lazy(() => import('./components/Asymmetric/DiffieHellman'));
+const EccConcept = lazy(() => import('./components/Asymmetric/EccConcept'));
+const AvalancheVisualizer = lazy(() => import('./components/Hashing/AvalancheVisualizer'));
+const DigitalSignature = lazy(() => import('./components/Hashing/DigitalSignature'));
+const FrequencyTool = lazy(() => import('./components/Tools/FrequencyTool'));
+const ConverterTool = lazy(() => import('./components/Tools/ConverterTool'));
+const QuizArena = lazy(() => import('./components/Quiz/QuizArena'));
+const CtfArena = lazy(() => import('./components/CTF/CtfArena'));
+const TheoryModal = lazy(() => import('./components/Theory/TheoryModal'));
+
+function SectionLoader() {
+  return (
+    <div className="flex items-center justify-center py-24" role="status" aria-live="polite">
+      <div className="w-8 h-8 rounded-full border-2 border-slate-700 border-t-cyan-400 animate-spin" />
+      <span className="sr-only">Yuklanmoqda…</span>
+    </div>
+  );
+}
 
 // Sub-tab pill component
 function SubTabs({ tabs, active, onChange, color = 'cyan' }) {
@@ -79,14 +93,12 @@ function SectionHeader({ title, desc, icon: Icon, iconColor, accentColor, childr
 
 export default function App() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState('home');
+  const [route, navigate] = useHashRoute();
   const [isTheoryOpen, setIsTheoryOpen] = useState(false);
 
-  const [classicalSubTab, setClassicalSubTab] = useState('caesar');
-  const [modernSubTab, setModernSubTab] = useState('aes');
-  const [asymmetricSubTab, setAsymmetricSubTab] = useState('rsa');
-  const [hashingSubTab, setHashingSubTab] = useState('avalanche');
-  const [toolsSubTab, setToolsSubTab] = useState('frequency');
+  const activeTab = route.tab;
+  const setActiveTab = (tab) => navigate(tab);
+  const subOf = (tabs) => (tabs.some((x) => x.id === route.sub) ? route.sub : tabs[0].id);
 
   const classicalTabs = [
     { id: 'caesar', label: 'Sezar' },
@@ -118,6 +130,13 @@ export default function App() {
     { id: 'converter', label: 'Bin/Hex/Base64' },
   ];
 
+  const classicalSubTab = subOf(classicalTabs);
+  const modernSubTab = subOf(modernTabs);
+  const asymmetricSubTab = subOf(asymmetricTabs);
+  const hashingSubTab = subOf(hashingTabs);
+  const toolsSubTab = subOf(toolsTabs);
+  const knownTabs = ['home', 'course', 'classical', 'modern', 'asymmetric', 'hashing', 'tools', 'quiz', 'ctf'];
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
       
@@ -129,14 +148,24 @@ export default function App() {
       />
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
+      <main id="main" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+       <ErrorBoundary resetKey={`${route.tab}/${route.sub}`}>
+       <Suspense fallback={<SectionLoader />}>
+
         {/* Home */}
-        {activeTab === 'home' && (
-          <Hero 
-            setActiveTab={setActiveTab} 
-            onOpenTheory={() => setIsTheoryOpen(true)} 
-          />
+        {(activeTab === 'home' || !knownTabs.includes(activeTab)) && (
+          <div className="space-y-16">
+            <Hero
+              setActiveTab={setActiveTab}
+              onOpenTheory={() => setIsTheoryOpen(true)}
+            />
+            <CourseRoadmap navigate={navigate} />
+          </div>
+        )}
+
+        {/* Course — 0 dan o'quv kursi */}
+        {activeTab === 'course' && (
+          <CoursePage lessonId={route.sub} navigate={navigate} />
         )}
 
         {/* Classical Ciphers */}
@@ -152,17 +181,19 @@ export default function App() {
               <SubTabs
                 tabs={classicalTabs}
                 active={classicalSubTab}
-                onChange={setClassicalSubTab}
+                onChange={(sub) => navigate('classical', sub)}
                 color="amber"
               />
             </SectionHeader>
 
+            <Suspense fallback={<SectionLoader />}>
             {classicalSubTab === 'caesar' && <CaesarCipher />}
             {classicalSubTab === 'vigenere' && <VigenereCipher />}
             {classicalSubTab === 'affine' && <AffineCipher />}
             {classicalSubTab === 'playfair' && <PlayfairCipher />}
             {classicalSubTab === 'railfence' && <RailFence />}
             {classicalSubTab === 'enigma' && <EnigmaMini />}
+            </Suspense>
           </div>
         )}
 
@@ -179,13 +210,15 @@ export default function App() {
               <SubTabs
                 tabs={modernTabs}
                 active={modernSubTab}
-                onChange={setModernSubTab}
+                onChange={(sub) => navigate('modern', sub)}
                 color="cyan"
               />
             </SectionHeader>
 
+            <Suspense fallback={<SectionLoader />}>
             {modernSubTab === 'aes' && <AesVisualizer />}
             {modernSubTab === 'modes' && <CipherModes />}
+            </Suspense>
           </div>
         )}
 
@@ -202,14 +235,16 @@ export default function App() {
               <SubTabs
                 tabs={asymmetricTabs}
                 active={asymmetricSubTab}
-                onChange={setAsymmetricSubTab}
+                onChange={(sub) => navigate('asymmetric', sub)}
                 color="purple"
               />
             </SectionHeader>
 
+            <Suspense fallback={<SectionLoader />}>
             {asymmetricSubTab === 'rsa' && <RsaVisualizer />}
             {asymmetricSubTab === 'dh' && <DiffieHellman />}
             {asymmetricSubTab === 'ecc' && <EccConcept />}
+            </Suspense>
           </div>
         )}
 
@@ -226,13 +261,15 @@ export default function App() {
               <SubTabs
                 tabs={hashingTabs}
                 active={hashingSubTab}
-                onChange={setHashingSubTab}
+                onChange={(sub) => navigate('hashing', sub)}
                 color="emerald"
               />
             </SectionHeader>
 
+            <Suspense fallback={<SectionLoader />}>
             {hashingSubTab === 'avalanche' && <AvalancheVisualizer />}
             {hashingSubTab === 'signature' && <DigitalSignature />}
+            </Suspense>
           </div>
         )}
 
@@ -249,13 +286,15 @@ export default function App() {
               <SubTabs
                 tabs={toolsTabs}
                 active={toolsSubTab}
-                onChange={setToolsSubTab}
+                onChange={(sub) => navigate('tools', sub)}
                 color="sky"
               />
             </SectionHeader>
 
+            <Suspense fallback={<SectionLoader />}>
             {toolsSubTab === 'frequency' && <FrequencyTool />}
             {toolsSubTab === 'converter' && <ConverterTool />}
+            </Suspense>
           </div>
         )}
 
@@ -273,13 +312,16 @@ export default function App() {
           </div>
         )}
 
+       </Suspense>
+       </ErrorBoundary>
       </main>
 
       {/* Theory Modal */}
-      <TheoryModal 
-        isOpen={isTheoryOpen} 
-        onClose={() => setIsTheoryOpen(false)} 
-      />
+      {isTheoryOpen && (
+        <Suspense fallback={null}>
+          <TheoryModal isOpen onClose={() => setIsTheoryOpen(false)} />
+        </Suspense>
+      )}
 
       {/* Premium Footer */}
       <footer className="relative mt-16 border-t border-slate-800/60 bg-slate-950 overflow-hidden">
@@ -306,7 +348,7 @@ export default function App() {
               </p>
               <div className="flex items-center gap-1.5 text-xs text-slate-500">
                 <Zap className="w-3 h-3 text-cyan-500" />
-                <span>Powered by React + Vite</span>
+                <span>Oflayn ishlaydi · Ochiq manba</span>
               </div>
             </div>
 
@@ -315,6 +357,7 @@ export default function App() {
               <h3 className="text-xs font-bold text-slate-300 uppercase tracking-widest">Bo'limlar</h3>
               <div className="grid grid-cols-2 gap-1">
                 {[
+                  { label: "O'quv kursi (0 dan)", tab: 'course' },
                   { label: 'Klassik Shifrlar', tab: 'classical' },
                   { label: 'Zamonaviy AES', tab: 'modern' },
                   { label: 'Asimmetrik (RSA)', tab: 'asymmetric' },
@@ -357,7 +400,7 @@ export default function App() {
               <Shield className="w-3.5 h-3.5 text-cyan-600" />
               <span className="font-semibold text-slate-500">KriptoLab</span>
               <span>—</span>
-              <span>Barcha huquqlar himoyalangan © 2025</span>
+              <span>Ta'lim maqsadlari uchun © {new Date().getFullYear()}</span>
             </div>
             <div className="flex items-center gap-1 text-slate-600">
               <span>Made with</span>

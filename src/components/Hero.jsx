@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Lock, Binary, KeyRound, Fingerprint, SlidersHorizontal, Trophy,
-  ArrowRight, GraduationCap, Zap, Shield, ChevronRight, Star,
-  Cpu, Globe2, Users, Award, BookOpen, Sparkles, TrendingUp,
+  Lock, KeyRound, Fingerprint, SlidersHorizontal, Trophy,
+  ArrowRight, GraduationCap, Zap, Shield, ChevronRight,
+  Cpu, Globe2, Award, BookOpen, Sparkles,
   CheckCircle2, Code2, FlaskConical
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -39,6 +39,7 @@ function MatrixBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     const ctx = canvas.getContext('2d');
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -101,7 +102,6 @@ function FloatingOrb({ color, size, top, left, delay = 0 }) {
 export default function Hero({ setActiveTab, onOpenTheory }) {
   const { t } = useLanguage();
   const [visible, setVisible] = useState(false);
-  const sectionRef = useRef(null);
   
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
@@ -271,15 +271,24 @@ export default function Hero({ setActiveTab, onOpenTheory }) {
           {/* CTA Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
             <button
-              id="hero-start-lab-btn"
-              onClick={() => setActiveTab('classical')}
+              id="hero-start-course-btn"
+              onClick={() => setActiveTab('course')}
               className="btn-primary group relative flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105"
             >
-              <Zap className="w-4 h-4 fill-current" />
-              <span>{t('hero.startLab')}</span>
+              <GraduationCap className="w-4 h-4" />
+              <span>{t('hero.startCourse')}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
-            
+
+            <button
+              id="hero-start-lab-btn"
+              onClick={() => setActiveTab('classical')}
+              className="group flex items-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold text-sm border border-slate-700 bg-slate-900/50 backdrop-blur-sm hover:bg-slate-800/80 hover:border-cyan-500/50 text-slate-200 transition-all duration-300 hover:scale-105"
+            >
+              <Zap className="w-4 h-4 text-cyan-400" />
+              <span>{t('hero.startLab')}</span>
+            </button>
+
             <button
               id="hero-theory-btn"
               onClick={onOpenTheory}

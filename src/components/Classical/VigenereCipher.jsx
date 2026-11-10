@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { vigenereEncrypt, vigenereDecrypt } from '../../utils/classicalCiphers';
-import { Copy, Check, Sparkles, Grid, Eye, RotateCcw } from 'lucide-react';
+import { Copy, Check, Grid, RotateCcw } from 'lucide-react';
 
 export default function VigenereCipher() {
   const [inputText, setInputText] = useState('KRIPTOGRAFIYA');

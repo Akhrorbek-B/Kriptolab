@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Copy, Check, Binary, Sparkles, ArrowRightLeft } from 'lucide-react';
+import { Copy, Check } from 'lucide-react';
 
 export default function ConverterTool() {
   const [text, setText] = useState('Crypto 2026');

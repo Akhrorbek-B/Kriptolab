@@ -3,7 +3,7 @@ import {
   ShieldCheck, Lock, KeyRound, Binary, Fingerprint, 
   SlidersHorizontal, Trophy, BookOpen, Sparkles,
   Sun, Moon, Globe, Menu, X, ChevronDown,
-  Zap, Shield, Flag
+  Flag, GraduationCap
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -35,6 +35,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
 
   const navItems = [
     { id: 'home', label: t('nav.home'), icon: Sparkles, color: 'cyan' },
+    { id: 'course', label: t('nav.course'), icon: GraduationCap, color: 'indigo' },
     { id: 'classical', label: t('nav.classical'), icon: Lock, color: 'amber' },
     { id: 'modern', label: t('nav.modern'), icon: Binary, color: 'cyan' },
     { id: 'asymmetric', label: t('nav.asymmetric'), icon: KeyRound, color: 'purple' },
@@ -50,6 +51,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
     purple: { active: 'bg-purple-500/15 text-purple-300 border-purple-500/40 shadow-purple-500/10', dot: 'bg-purple-400', icon: 'text-purple-400' },
     emerald: { active: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-emerald-500/10', dot: 'bg-emerald-400', icon: 'text-emerald-400' },
     sky: { active: 'bg-sky-500/15 text-sky-300 border-sky-500/40 shadow-sky-500/10', dot: 'bg-sky-400', icon: 'text-sky-400' },
+    indigo: { active: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/40 shadow-indigo-500/10', dot: 'bg-indigo-400', icon: 'text-indigo-400' },
     yellow: { active: 'bg-yellow-500/15 text-yellow-300 border-yellow-500/40 shadow-yellow-500/10', dot: 'bg-yellow-400', icon: 'text-yellow-400' },
     red: { active: 'bg-red-500/15 text-red-300 border-red-500/40 shadow-red-500/10', dot: 'bg-red-400', icon: 'text-red-400' },
   };
@@ -104,33 +106,6 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
                 </p>
               </div>
             </button>
-
-            {/* Desktop Nav */}
-            <nav className="hidden xl:flex items-center gap-0.5" aria-label="Main navigation">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-                const colors = colorMap[item.color];
-                return (
-                  <button
-                    key={item.id}
-                    id={`nav-${item.id}`}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 border ${
-                      isActive
-                        ? `${colors.active} border shadow-sm`
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border-transparent'
-                    }`}
-                  >
-                    {isActive && (
-                      <span className={`w-1.5 h-1.5 rounded-full ${colors.dot} animate-pulse flex-shrink-0`} />
-                    )}
-                    <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? colors.icon : 'text-slate-500'}`} />
-                    <span className="whitespace-nowrap">{item.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2">
@@ -201,16 +176,18 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
               {/* Mobile menu toggle */}
               <button
                 id="navbar-mobile-toggle"
+                aria-label="Menyu"
+                aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="xl:hidden p-2 rounded-xl border border-slate-700/50 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all"
+                className="lg:hidden p-2 rounded-xl border border-slate-700/50 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all"
               >
                 {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
               </button>
             </div>
           </div>
 
-          {/* Tablet horizontal scroll nav */}
-          <div className="hidden lg:flex xl:hidden items-center gap-1 py-2 overflow-x-auto no-scrollbar border-t border-slate-800/50">
+          {/* Desktop/tablet section bar */}
+          <nav aria-label="Asosiy bo'limlar" className="hidden lg:flex items-center gap-1 py-2 overflow-x-auto no-scrollbar border-t border-slate-800/50">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
@@ -218,8 +195,10 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
               return (
                 <button
                   key={item.id}
+                  id={`nav-${item.id}`}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all border ${
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all border ${
                     isActive
                       ? `${colors.active} border`
                       : 'text-slate-400 hover:bg-slate-800 border-transparent'
@@ -230,7 +209,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
                 </button>
               );
             })}
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -238,10 +217,10 @@ export default function Navbar({ activeTab, setActiveTab, onOpenTheory }) {
       {mobileOpen && (
         <>
           <div 
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm xl:hidden"
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="fixed top-0 right-0 h-full w-72 z-50 bg-slate-950 border-l border-slate-800 shadow-2xl xl:hidden flex flex-col overflow-y-auto">
+          <div className="fixed top-0 right-0 h-full w-72 z-50 bg-slate-950 border-l border-slate-800 shadow-2xl lg:hidden flex flex-col overflow-y-auto">
             {/* Drawer header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-800">
               <div className="flex items-center gap-2">

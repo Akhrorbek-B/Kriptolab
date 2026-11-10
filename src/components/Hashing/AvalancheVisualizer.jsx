@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { analyzeAvalanche } from '../../utils/hashingUtils';
-import { Fingerprint, Flame, CheckCircle, RefreshCw, Zap } from 'lucide-react';
+import { Flame, CheckCircle, Zap } from 'lucide-react';
 
 export default function AvalancheVisualizer() {
   const [text1, setText1] = useState('Universitet');
