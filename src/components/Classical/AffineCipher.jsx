@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { affineEncrypt, affineDecrypt, gcd, modInverse } from '../../utils/classicalCiphers';
-import { Copy, Check, Calculator, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Copy, Check, Calculator, ShieldCheck } from 'lucide-react';
 
 export default function AffineCipher() {
   const [inputText, setInputText] = useState('UNIVERSITET');

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { simulateDiffieHellman } from '../../utils/asymmetricCiphers';
-import { KeyRound, ShieldCheck, ArrowRight, ArrowLeft, Sparkles, RefreshCw, Palette } from 'lucide-react';
+import { KeyRound, ShieldCheck, ArrowRight, ArrowLeft, Palette } from 'lucide-react';
 
 export default function DiffieHellman() {
   const [p, setP] = useState(23);

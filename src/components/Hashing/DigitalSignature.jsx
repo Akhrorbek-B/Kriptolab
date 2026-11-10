@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { simulateSignature } from '../../utils/hashingUtils';
-import { Fingerprint, ShieldCheck, ShieldAlert, FileText, ArrowRight, UserCheck, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, ShieldAlert, UserCheck, AlertTriangle } from 'lucide-react';
 
 export default function DigitalSignature() {
   const [docText, setDocText] = useState("Alisa Bobga 1,000$ o'tkazmoqda");

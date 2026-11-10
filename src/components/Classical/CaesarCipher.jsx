@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { caesarEncrypt, caesarDecrypt, caesarBruteForce } from '../../utils/classicalCiphers';
-import { Copy, Check, RotateCcw, Sparkles, HelpCircle, ShieldAlert } from 'lucide-react';
+import { Copy, Check, RotateCcw, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function CaesarCipher() {

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { 
-  calculateRsaKeys, 
-  rsaEncryptText, 
-  rsaDecryptText, 
-  isPrime, 
-  RECOMMENDED_PRIMES 
-} from '../../utils/asymmetricCiphers';
-import { KeyRound, ShieldCheck, Lock, Unlock, Copy, Check, Calculator, Sparkles } from 'lucide-react';
+import { calculateRsaKeys, rsaEncryptText, rsaDecryptText, isPrime } from '../../utils/asymmetricCiphers';
+import { KeyRound, Lock, Unlock, Calculator, Sparkles } from 'lucide-react';
 
 export default function RsaVisualizer() {
   const [p, setP] = useState(61);

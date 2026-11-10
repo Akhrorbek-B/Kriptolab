@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Markdown from '../Markdown';
 import { THEORY_TOPICS } from '../../data/theoryData';
-import { BookOpen, X, Search, ChevronRight, FileText, Download, Check } from 'lucide-react';
+import { BookOpen, X, Search, FileText, Check } from 'lucide-react';
 
 export default function TheoryModal({ isOpen, onClose }) {
   const [selectedTopicId, setSelectedTopicId] = useState(THEORY_TOPICS[0].id);
   const [search, setSearch] = useState('');
   const [copiedLab, setCopiedLab] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -26,7 +39,7 @@ export default function TheoryModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md" role="dialog" aria-modal="true" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="relative w-full max-w-5xl h-[88vh] rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl flex flex-col overflow-hidden glow-cyan">
         
         {/* Modal Top Bar */}
@@ -122,9 +135,7 @@ export default function TheoryModal({ isOpen, onClose }) {
             </div>
 
             {/* Markdown Rendered Content */}
-            <div className="text-slate-300 text-xs sm:text-sm leading-relaxed space-y-4 font-sans whitespace-pre-line">
-              {activeTopic.content}
-            </div>
+            <Markdown source={activeTopic.content} />
           </div>
 
         </div>

@@ -1,12 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { CTF_CHALLENGES_DATA } from '../../data/ctfData';
 import confetti from 'canvas-confetti';
-import {
-  Flag, CheckCircle2, HelpCircle, Lock, Unlock,
-  Search, Filter, ChevronDown, ChevronUp, Terminal,
-  BookOpen, Code, Trophy, Zap, Shield, Star,
-  ArrowRight, RotateCcw, Send, Eye, EyeOff
-} from 'lucide-react';
+import { Flag, CheckCircle2, Search, Filter, ChevronDown, ChevronUp, Terminal, BookOpen, Trophy, Shield, RotateCcw, Send, Eye, EyeOff } from 'lucide-react';
 
 // ── Difficulty badge color map ─────────────────────────────────────────
 const DIFF_STYLES = {

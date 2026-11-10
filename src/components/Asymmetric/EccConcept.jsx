@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, ShieldCheck, Zap, Sparkles, TrendingUp } from 'lucide-react';
+import { Activity, Zap } from 'lucide-react';
 
 export default function EccConcept() {
   const [a, setA] = useState(-3);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { playfairEncrypt, generatePlayfairMatrix } from '../../utils/classicalCiphers';
-import { Copy, Check, Grid, Sparkles, AlertCircle } from 'lucide-react';
+import { playfairEncrypt } from '../../utils/classicalCiphers';
+import { Copy, Check, Grid } from 'lucide-react';
 
 export default function PlayfairCipher() {
   const [inputText, setInputText] = useState('MONARCHY');

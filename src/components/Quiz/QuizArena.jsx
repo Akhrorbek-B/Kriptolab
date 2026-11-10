@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import { QUIZ_QUESTIONS, CTF_CHALLENGES } from '../../data/quizData';
 import confetti from 'canvas-confetti';
-import { 
-  Trophy, 
-  HelpCircle, 
-  CheckCircle2, 
-  XCircle, 
-  ArrowRight, 
-  RotateCcw, 
-  Flag, 
-  Unlock, 
-  Lock, 
-  Sparkles,
-  Award
-} from 'lucide-react';
+import { Trophy, CheckCircle2, XCircle, ArrowRight, RotateCcw, Flag } from 'lucide-react';
 
 export default function QuizArena() {
   const [subTab, setSubTab] = useState('quiz'); // 'quiz' | 'ctf'
